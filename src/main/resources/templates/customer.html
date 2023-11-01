@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>HM Agro Customers</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <link rel="icon" href="web.png" />
+
+    <style>
+      body {
+        background: linear-gradient(
+          114.2deg,
+          rgba(121, 184, 243, 1) 22.6%,
+          rgba(255, 180, 239, 1) 67.7%
+        );
+        background-repeat: repeat;
+        height: 100vh;
+        font-family: "Poppins";
+      }
+    </style>
+    <script type="text/javascript" th:src="@{/js/cssandjs/sort.js}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+      <!-- Brand -->
+      <a class="navbar-brand" href="/hmagro/home">HM Agro Enterprises</a>
+
+      <!-- Toggler/collapsibe Button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="navbar-brand" th:href="@{/hmagro/employees}"
+              >Employee Management</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/hmagro/customers}"
+              >Customer Management</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/hmagro/orders}">Order Management</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <h1>List Customers</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <a
+            th:href="@{/hmagro/customer/new}"
+            class="btn btn-primary btn-sm mb-3"
+            >Add Customer</a
+          >
+          <form th:href="@{/hmagro/customers}" method="get">
+            <input type="text" name="keyword" id="txtsearch" />
+            <button type="submit">GO</button>
+          </form>
+        </div>
+      </div>
+
+      <table id="myTable" class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(0)"
+                >Serial ID
+              </a>
+            </th>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(1)"
+                >Customer Name
+              </a>
+            </th>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(2)"
+                >Primary Number
+              </a>
+            </th>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(3)"
+                >Secondar Number</a
+              >
+            </th>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(4)"
+                >Address
+              </a>
+            </th>
+            <th>
+              <a href="javascript:void(0);" th:onclick="sortTable(0)"
+                >Actions
+              </a>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="customer: ${customers}">
+            <td th:text="${customer.s_no}"></td>
+            <td th:text="${customer.customer_name}"></td>
+            <td th:text="${customer.primary_number}"></td>
+            <td th:text="${customer.secondary_number}"></td>
+            <td th:text="${customer.address}"></td>
+            <td>
+              <!--  <img src="/static/update.png" alt="" width="20px" />  -->
+
+              <a th:href="@{/hmagro/customer/update/{id}(id=${customer.s_no})}"
+                ><img th:src="@{/images/update.png}" alt="" width="20px"
+              /></a>
+
+              <a th:href="@{/employee/delete/{id}(id=${customer.s_no})}"
+                ><img th:src="@{/images/delete.png}" alt="" width="20px"
+              /></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <footer style="font-size: large" class="panel-footer">
+        <nav aria-label="Page navigation example">
+          Total Items [[${totalItems}]] : Page [[${currentPage}]] of
+          [[${totalPages}]]
+
+          <ul class="pagination">
+            <li class="page-item">
+              <a
+                class="page-link"
+                th:if="${currentPage > 1}"
+                th:href="@{/hmagro/customer/page/1}"
+                >First</a
+              >
+              <span th:unless="${currentPage > 1}">First</span>
+            </li>
+
+            <li class="page-item">
+              <a
+                th:if="${currentPage > 1}"
+                th:href="@{'/hmagro/customer/page/' + ${currentPage - 1}}"
+                >Previous</a
+              >
+              <span th:unless="${currentPage > 1}">Previous</span>
+            </li>
+
+            <li class="page-item">
+              <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <a
+                  th:if="${i != currentPage}"
+                  th:href="@{'/hmagro/customer/page/' + ${i}}"
+                  >[[${i}]]</a
+                >
+                <span th:unless="${i != currentPage}">[[${i}]]</span>
+              </span>
+            </li>
+
+            <li class="page-item">
+              <a
+                th:if="${currentPage < totalPages}"
+                th:href="@{'/hmagro/customer/page/' + ${currentPage + 1}}"
+                >Next</a
+              >
+              <span th:unless="${currentPage < totalPages}">Next</span>
+            </li>
+
+            <li class="page-item">
+              <a
+                th:if="${currentPage < totalPages}"
+                th:href="@{'/hmagro/customer/page/' + ${totalPages}}"
+                >Last</a
+              >
+              <span th:unless="${currentPage < totalPages}">Last</span>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Stock Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Stock Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/hmagro/stocks}">Stocks Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+	<div class = "container">
+		<div class = "row">
+			<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class = "text-center"> Create New Stock </h1>
+				<div class = "card-body">
+					<form th:action="@{/hmagro/stock/update}" th:object = "${stock}" method="POST">
+						
+						<div class ="form-group">
+							<label> Stock ID  </label>
+							<input
+							type = "text"
+							name = "firstName"
+							th:field = "*{s_no}"
+							class = "form-control"
+							placeholder="Enter Stock ID" 
+							/>
+						</div>
+						
+						<div class ="form-group">
+							<label> Item Code </label>
+							<input
+							type = "text"
+							name = "firstName"
+							th:field = "*{item_code}"
+							class = "form-control"
+							placeholder="Enter Item Code" 
+							/>
+						</div>
+						
+					<div class ="form-group">
+							<label> Item Dimensions </label>
+							<input
+							type = "text"
+							name = "Adress"
+							th:field = "*{item_dimensions}"
+							class = "form-control"
+							placeholder="Enter Item Dimensions" 
+							/>
+						</div>
+						
+					<div class ="form-group">
+							<label> Employee Item Size </label>
+							<input
+							type = "text"
+							name = "Phone Number"
+							th:field = "*{item_size}"
+							class = "form-control"
+							placeholder="Enter Item Size" 
+							/>
+						</div>
+						
+						
+						<div class ="form-group">
+							<label> Item Weight </label>
+							<input
+							type = "text"
+							name = "firstName"
+							th:field = "*{item_weight}"
+							class = "form-control"
+							placeholder="Enter Item Weight" 
+							/>
+						</div>
+						<div class ="form-group">
+							<label> Item Price </label>
+							<input
+							type = "text"
+							name = "firstName"
+							th:field = "*{item_price}"
+							class = "form-control"
+							placeholder="Enter Item Price" 
+							/>
+						</div>
+						<div class ="form-group">
+							<label> Item Purchase Date </label>
+							<input
+							type = "date"
+							name = "firstName"
+							th:field = "*{item_purchase_date}"
+							class = "form-control"
+							placeholder="Enter Item Purchase Date" 
+							/>
+						</div>
+						
+						<div class = "box-footer">
+							<button type="submit" class = "btn btn-primary">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
